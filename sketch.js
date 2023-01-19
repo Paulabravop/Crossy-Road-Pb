@@ -1,21 +1,21 @@
 let car1;
 let car2;
 let car3;
+let cars = [];
 
 function setup() {
   createCanvas(400, 400);
-
-  car1 = new Car(random(width), random(height));
-  car2 = new Car(random(width), random(height));
-  car3 = new Car(random(width), random(height));
-  console.log(car1);
+  for (let i = 0; i < 10; i++) {
+    cars[i] = new Car(random(width), random(height));
+  }
 }
 
 function draw() {
   background(200);
-  car1.body();
-  car2.body();
-  car3.body();
+  for (let i = 0; i < 10; i++) {
+    cars[i].body();
+    cars[i].move();
+  }
 }
 class Car {
   constructor(x, y) {
@@ -25,6 +25,11 @@ class Car {
   }
   body() {
     rect(this.x, this.y, 50, 35);
-    c;
+  }
+  move() {
+    this.x++;
+    if (this.x > width) {
+      this.x = 0;
+    }
   }
 }
