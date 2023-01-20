@@ -1,14 +1,15 @@
 let cars = [];
 let personaje1;
-let carsNum = 3;
+let carsNum = 10;
 let sceneNum = 0;
+let vidasPersonaje = 5;
 
 function setup() {
   createCanvas(400, 400);
   for (let i = 0; i < carsNum; i++) {
     cars[i] = new Car(
       random(width),
-      random(height),
+      random(height - 100),
       color(random(255), random(255), random(255))
     );
   }
@@ -20,6 +21,7 @@ function draw() {
   for (let i = 0; i < carsNum; i++) {
     cars[i].body();
     cars[i].move();
+    cars[i].checkCollision();
   }
   personaje1.body();
   personaje1.move();
@@ -48,21 +50,31 @@ function draw() {
 
       break;
   }
+  currentVidasPersonaje();
+}
+
+function currentVidasPersonaje() {
+  for (let i = 0; i < vidasPersonaje; i++) {
+    ellipse(i * 20, height - 10, 20);
+  }
 }
 
 class Personaje {
   constructor() {
     this.x = width / 2;
     this.y = height - 50;
+    this.w = 30;
+    this.h = 30;
     this.c = color(0, 255, 0);
   }
   body() {
     fill(this.c);
-    ellipse(this.x, this.y, 30, 30);
+    ellipse(this.x, this.y, this.w, this.h);
   }
   move() {
     if (keyIsDown(38)) {
       this.y -= 3;
+      //velocidad movimiento
     }
     if (keyIsDown(40)) {
       this.y++;
@@ -84,16 +96,32 @@ class Car {
     //ayuda a definir las variables  de las clases
     this.x = x;
     this.y = y;
+    this.w = 50;
+    this.h = 35;
     this.c = c;
   }
   body() {
     fill(this.c);
-    rect(this.x, this.y, 50, 35);
+    rect(this.x, this.y, this.w, this.h);
   }
   move() {
     this.x++;
     if (this.x > width) {
       this.x = 0;
+    }
+  }
+  checkCollision() {
+    if (
+      personaje1.x + personaje1.w / 2 > this.x &&
+      personaje1.x < this.x + this.w &&
+      personaje1.y + personaje1.h / 2 > this.y &&
+      personaje1.y < this.y + this.h
+    ) {
+      VidasPersonaje--;
+      console.log("bumped!");
+      personaje1.y = height - 50;
+
+      //reset posicion personaje
     }
   }
 }
