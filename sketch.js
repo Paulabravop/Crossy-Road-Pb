@@ -1,19 +1,19 @@
 let cars = [];
 let personaje1;
-let carsNum = 5;
+let carsNum = 3;
 let sceneNum = 0;
 let vidasPersonaje = 4;
 
 let piloto;
 let vidas;
 let carImg = [];
-let calle;
+//let calle;
 
 function preload() {
   piloto = loadImage("images/piloto.png");
 
-  for (let i = 0; i < carsNum; i++) {
-    // carImg[i] = loadImage("images/car1" + i + ".png");
+  for (let i = 0; i < 3; i++) {
+    carImg[i] = loadImage("images/car" + i + ".png");
   }
 }
 function setup() {
@@ -32,12 +32,12 @@ function setup() {
 function draw() {
   background(200);
 
-  for (let i = 0; i < 5; i++) {
-    //image(carImg[i], i * 30, 30, carImg[i].width * 0.5, carImg[i].height * 0.5);
-  }
+  //for (let i = 0; i < 3; i++) {
+  // image(carImg[i], i * 30, 30, carImg[i].width * 0.5, carImg[i].height * 0.5);
+  //}
 
   for (let i = 0; i < carsNum; i++) {
-    cars[i].body();
+    cars[i].body(i);
     cars[i].move();
     cars[i].checkCollision();
   }
@@ -52,22 +52,7 @@ function draw() {
     personaje1.y++;
   }
 
-  switch (sceneNum) {
-    case 0:
-      console.log("scene 0");
-
-      break; // stop right here & exit
-
-    case 1:
-      console.log("scene 1");
-
-      break;
-
-    case 2:
-      console.log("scene 2");
-
-      break;
-  }
+  //
   currentVidasPersonaje();
 }
 
@@ -122,9 +107,18 @@ class Car {
     this.h = 35;
     this.c = c;
   }
-  body() {
-    fill(this.c);
-    rect(this.x, this.y, this.w, this.h);
+  body(index) {
+    //fill(this.c);
+    //rect(this.x, this.y, this.w, this.h);
+
+    imageMode(CENTER);
+    image(
+      carImg[index],
+      this.x - 20,
+      this.y - 20,
+      carImg[index].width * 1,
+      carImg[index].height * 1
+    );
   }
   move() {
     this.x++;
