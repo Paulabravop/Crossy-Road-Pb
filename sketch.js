@@ -7,10 +7,12 @@ let vidasPersonaje = 4;
 let piloto;
 let vidas;
 let carImg = [];
-//let calle;
+var backgroundImg;
 
 function preload() {
   piloto = loadImage("images/piloto.png");
+
+  backgroundImg = loadImage("images/calle.png");
 
   for (let i = 0; i < 3; i++) {
     carImg[i] = loadImage("images/car" + i + ".png");
@@ -31,6 +33,8 @@ function setup() {
 
 function draw() {
   background(200);
+
+  background(backgroundImg);
 
   //for (let i = 0; i < 3; i++) {
   // image(carImg[i], i * 30, 30, carImg[i].width * 0.5, carImg[i].height * 0.5);
