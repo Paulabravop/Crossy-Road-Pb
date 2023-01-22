@@ -19,8 +19,9 @@ function preload() {
   }
 }
 function setup() {
+  // prueba canvas
   createCanvas(600, 600);
-
+  //////////////////////////////////////// POSITION CANVA FONDO ////////////////////////
   for (let i = 0; i < 5; i++) {
     cars[i] = new Car(
       random(width),
@@ -35,6 +36,8 @@ function draw() {
   background(200);
 
   background(backgroundImg);
+  ///////////////////activa position fondo/////////////////
+  // background.postion(20, 30,);
 
   //for (let i = 0; i < 3; i++) {
   // image(carImg[i], i * 30, 30, carImg[i].width * 0.5, carImg[i].height * 0.5);
@@ -65,6 +68,12 @@ function currentVidasPersonaje() {
     //ellipse(i * 20, height - 30, 20);
     image(piloto, i * 35, height - 50, 30, 30);
   }
+}
+
+class Rode {
+  static laneWidth;
+
+  constructor() {}
 }
 
 class Personaje {
