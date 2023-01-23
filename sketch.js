@@ -1,12 +1,13 @@
 let cars = [];
 let personaje1;
-let carsNum = 3;
+let carsNum = 7;
 let sceneNum = 0;
 let vidasPersonaje = 4;
 
 let piloto;
 let vidas;
 let carImg = [];
+let road;
 var backgroundImg;
 
 function preload() {
@@ -14,19 +15,20 @@ function preload() {
 
   backgroundImg = loadImage("images/calle.png");
 
-  for (let i = 0; i < 3; i++) {
+  for (let i = 0; i < 7; i++) {
     carImg[i] = loadImage("images/car" + i + ".png");
   }
 }
 function setup() {
   // prueba canvas
   createCanvas(600, 600);
+
   //////////////////////////////////////// POSITION CANVA FONDO ////////////////////////
-  for (let i = 0; i < 5; i++) {
+  for (let i = 0; i < 7; i++) {
     cars[i] = new Car(
       random(width),
-      random(height - 100),
-      color(random(255), random(255), random(255))
+      random(height - 150)
+      // color(random(255), random(255), random(255))
     );
   }
   personaje1 = new Personaje();
@@ -37,7 +39,7 @@ function draw() {
 
   background(backgroundImg);
   ///////////////////activa position fondo/////////////////
-  // background.postion(20, 30,);
+  //background.postion(20, 30);
 
   //for (let i = 0; i < 3; i++) {
   // image(carImg[i], i * 30, 30, carImg[i].width * 0.5, carImg[i].height * 0.5);
@@ -68,12 +70,6 @@ function currentVidasPersonaje() {
     //ellipse(i * 20, height - 30, 20);
     image(piloto, i * 35, height - 50, 30, 30);
   }
-}
-
-class Rode {
-  static laneWidth;
-
-  constructor() {}
 }
 
 class Personaje {
@@ -127,7 +123,7 @@ class Car {
     imageMode(CENTER);
     image(
       carImg[index],
-      this.x - 20,
+      this.x - 2,
       this.y - 20,
       carImg[index].width * 1,
       carImg[index].height * 1
@@ -147,7 +143,7 @@ class Car {
       personaje1.y < this.y + this.h
     ) {
       console.log("bumped!");
-      personaje1.y = height - 40;
+      personaje1.y = height - 20;
       vidasPersonaje--;
       //reset posicion personaje
     }
