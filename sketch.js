@@ -21,6 +21,7 @@ function preload() {
     carImg[i] = loadImage("images/car" + i + ".png");
   }
 }
+
 function setup() {
   over = loadImage("images/over.png");
   // prueba canvas
@@ -35,9 +36,10 @@ function setup() {
     );
   }
   personaje1 = new Personaje();
-  loadImage("images/over.png", (img) => {
-    over(img, 140, 0);
-  });
+  loadImage("images/over.png"),
+    (img) => {
+      over(img, 140, 0);
+    };
 }
 
 function draw() {
@@ -155,6 +157,9 @@ class Car {
       personaje1.y = height - 5;
       vidasPersonaje--;
       //reset posicion personaje
+    }
+    if (vidasPersonaje < 1) {
+      image(over, 300, 299);
     }
     if (vidasPersonaje < 0) {
       image(over, 300, 299);
