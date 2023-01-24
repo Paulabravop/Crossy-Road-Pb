@@ -9,9 +9,11 @@ let vidas;
 let carImg = [];
 let road;
 var backgroundImg;
+let over;
 
 function preload() {
   piloto = loadImage("images/piloto.png");
+  over = loadImage("images/over.png");
 
   backgroundImg = loadImage("images/calle.png");
 
@@ -20,6 +22,7 @@ function preload() {
   }
 }
 function setup() {
+  over = loadImage("images/over.png");
   // prueba canvas
   createCanvas(600, 600);
 
@@ -32,12 +35,17 @@ function setup() {
     );
   }
   personaje1 = new Personaje();
+  loadImage("images/over.png", (img) => {
+    over(img, 140, 0);
+  });
 }
 
 function draw() {
+  image(over, 0, 0);
   background(200);
 
   background(backgroundImg);
+
   ///////////////////activa position fondo/////////////////
   //background.postion(20, 30);
 
@@ -76,7 +84,7 @@ class Personaje {
   constructor() {
     this.x = width / 2;
     this.y = height - 50;
-    this.w = 30;
+    this.w = 80;
     this.h = 30;
     this.c = color(0, 255, 0);
   }
@@ -96,6 +104,7 @@ class Personaje {
       this.y++;
     }
   }
+
   home() {
     if (this.y < 0) {
       sceneNum++;
@@ -143,9 +152,12 @@ class Car {
       personaje1.y < this.y + this.h
     ) {
       console.log("bumped!");
-      personaje1.y = height - 20;
+      personaje1.y = height - 5;
       vidasPersonaje--;
       //reset posicion personaje
+    }
+    if (vidasPersonaje < 0) {
+      image(over, 300, 299);
     }
   }
 }
