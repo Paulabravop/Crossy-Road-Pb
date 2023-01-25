@@ -180,11 +180,7 @@ class Car {
 
 function keyPressed() {
   if (key == " ") {
-    personaje1.vidas = 0;
-  }
-}
-function keyPressed() {
-  if (personaje1.y < 50) {
     personaje1.vidas = 4;
+    personaje1.y = height - 50;
   }
 }
