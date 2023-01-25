@@ -10,10 +10,16 @@ let carImg = [];
 let road;
 var backgroundImg;
 let over;
+let win;
+
+let NC = 6;
+let anchoDeCarril;
+let margenSuperior = 200;
 
 function preload() {
   piloto = loadImage("images/piloto.png");
   over = loadImage("images/over.png");
+  win = loadImage("images/win.png");
 
   backgroundImg = loadImage("images/calle.png");
 
@@ -24,42 +30,44 @@ function preload() {
 
 function setup() {
   over = loadImage("images/over.png");
+  win = loadImage("images/win.png");
+
+  imageMode(CENTER);
   // prueba canvas
   createCanvas(600, 600);
+  imageMode(CENTER);
 
+  anchoDeCarril = (height - margenSuperior * 2) / NC;
   //////////////////////////////////////// POSITION CANVA FONDO ////////////////////////
   for (let i = 0; i < 7; i++) {
-    cars[i] = new Car(
-      random(width),
-      random(height - 150)
-      // color(random(255), random(255), random(255))
-    );
+    let initPosX = floor(random(NC)) * anchoDeCarril + margenSuperior;
+    cars[i] = new Car(random(width), initPosX);
   }
   personaje1 = new Personaje();
-  loadImage("images/over.png"),
-    (img) => {
-      over(img, 140, 0);
-    };
+  // loadImage('images/over.png'),
+  // 	(img) => {
+  // 		over(img, 140, 0);
+  // 	};
 }
 
 function draw() {
-  image(over, 0, 0);
-  background(200);
-
-  background(backgroundImg);
+  // background(200);
+  // background(backgroundImg);
+  background(255);
+  push();
+  translate(width / 2, height / 2);
+  image(backgroundImg, 0, 0, width, height);
+  pop();
 
   ///////////////////activa position fondo/////////////////
   //background.postion(20, 30);
-
-  //for (let i = 0; i < 3; i++) {
-  // image(carImg[i], i * 30, 30, carImg[i].width * 0.5, carImg[i].height * 0.5);
-  //}
 
   for (let i = 0; i < carsNum; i++) {
     cars[i].body(i);
     cars[i].move();
     cars[i].checkCollision();
   }
+
   personaje1.body();
   personaje1.move();
   personaje1.home();
@@ -73,12 +81,21 @@ function draw() {
 
   //
   currentVidasPersonaje();
+
+  if (personaje1.vidas <= 0) {
+    image(over, width / 2, height / 2, width, height);
+  } else if (personaje1.y < 50) {
+    image(win, width / 2, height / 2, width, height);
+  }
 }
 
 function currentVidasPersonaje() {
-  for (let i = 0; i < vidasPersonaje; i++) {
+  let posX = 35;
+  let posY = height - 24;
+  let gap = 40;
+  for (let i = 0; i < personaje1.vidas; i++) {
     //ellipse(i * 20, height - 30, 20);
-    image(piloto, i * 35, height - 50, 30, 30);
+    image(piloto, posX + gap * i, posY, 30, 30);
   }
 }
 
@@ -89,6 +106,7 @@ class Personaje {
     this.w = 80;
     this.h = 30;
     this.c = color(0, 255, 0);
+    this.vidas = 4;
   }
   body() {
     //fill(this.c);
@@ -131,7 +149,6 @@ class Car {
     //fill(this.c);
     //rect(this.x, this.y, this.w, this.h);
 
-    imageMode(CENTER);
     image(
       carImg[index],
       this.x - 2,
@@ -155,14 +172,19 @@ class Car {
     ) {
       console.log("bumped!");
       personaje1.y = height - 5;
-      vidasPersonaje--;
+      personaje1.vidas--;
       //reset posicion personaje
     }
-    if (vidasPersonaje < 1) {
-      image(over, 300, 299);
-    }
-    if (vidasPersonaje < 0) {
-      image(over, 300, 299);
-    }
+  }
+}
+
+function keyPressed() {
+  if (key == " ") {
+    personaje1.vidas = 0;
+  }
+}
+function keyPressed() {
+  if (personaje1.y < 50) {
+    personaje1.vidas = 4;
   }
 }
