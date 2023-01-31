@@ -173,7 +173,7 @@ class Car {
       console.log("bumped!");
       personaje1.y = height - 5;
       personaje1.vidas--;
-      //reset posicion personaje
+      //reset posicion personaje--
     }
   }
 }
